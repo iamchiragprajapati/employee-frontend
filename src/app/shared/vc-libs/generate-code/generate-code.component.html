@@ -1,0 +1,19 @@
+<div class="p-4 lg:p-6 xl:p-8 2xl:p-10">
+  <div class="p-2">
+    {{'partner.confirmDialog.description' | translate }}
+  </div>
+  <div class="flex justify-end p-2 mt-2">
+    <app-vc-button [class]="{ 'common-btn secondary-btn font-base font-semibold rounded-[5px] mr-4': true }"
+      (buttonTap)="closeDialog(false)">{{'partner.add.cancel' | translate }}</app-vc-button>
+    <app-vc-button [class]="{'common-btn primary-btn font-base font-semibold rounded-[5px] h-[40px] w-[100px]': true}"
+      (buttonTap)="tapOkButton()" [isDisabled]="isSubmitted" [spin]="isSubmitted">{{'partner.confirmDialog.deleteButton'
+      | translate}}</app-vc-button>
+  </div>
+
+</div>
+
+<ng-template #requiredError let-control="control">
+  <ng-container *ngIf="control.touched && control.errors?.required">
+    <p class="error-message">{{ 'validation.fieldRequired' | translate }}</p>
+  </ng-container>
+</ng-template>

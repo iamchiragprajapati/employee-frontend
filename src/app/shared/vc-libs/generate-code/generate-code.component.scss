@@ -1,0 +1,12 @@
+.field-lbl {
+    @apply w-[100%];
+}
+.form-field {
+    @apply w-[80px];
+}
+.total-cost {
+    @apply bg-red-light text-red border-red;
+}
+.total-profit {
+    @apply bg-green-light text-green border-green;
+}

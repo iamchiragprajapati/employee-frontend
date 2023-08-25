@@ -1,0 +1,9 @@
+<button [type]="type" [disabled]="isDisabled" [ngClass]="class" (click)="click()">
+  <ng-container *ngIf="!spin; else spinner;">
+    <ng-content></ng-content>
+  </ng-container>
+</button>
+
+<ng-template #spinner>
+  <app-vc-loader [class]="{ 'w-6 h-6 border-x-secondary border-y-transparent': true }"></app-vc-loader>
+</ng-template>

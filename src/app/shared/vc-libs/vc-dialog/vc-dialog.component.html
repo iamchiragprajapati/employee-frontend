@@ -1,0 +1,9 @@
+<div class="w-[500px] max-w-[100%] relative">
+  <div class="px-4 lg:px-6 xl:px-8 2xl:px-10 pt-3 lg:pt-4 2xl:pt-6">
+    <h1 class="font-bold text-[16px] md:text-[18px] lg:text-[20px] xl:text-[22px] 2xl:text-[24px]">{{ title | translate
+      }}</h1>
+    <app-vc-button [class]="{'close-btn': true}" (buttonTap)="close()">&#x2716;</app-vc-button>
+  </div>
+  <div *ngIf="title" class="border-t border-grey-50 mt-3 lg:mt-4 2xl:mt-6"></div>
+  <ng-template appDynamicDirective></ng-template>
+</div>
