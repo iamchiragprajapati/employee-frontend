@@ -1,20 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  COUNTRY_LIST,
-  CURRENCY_LIST,
-  LANGUAGE_LIST,
-  MessageType,
-  REGEX_CONSTANTS,
-  RegexType
-} from '@constants/app.constants';
+import { MessageType } from '@constants/app.constants';
 import { AllowNumberOnlyDirective } from '@directives/allow-number-only.directive';
 import { BreadCrumb } from '@models/breadcrumb.model';
-import { AddPartnerForm, PartnerAddress } from '@models/partner.model';
+import { AddEmployeeForm } from '@models/partner.model';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
 import { AlertToastrService } from '@services/alert-toastr.service';
@@ -33,20 +26,13 @@ import { finalize } from 'rxjs';
   templateUrl: './partner-add.component.html',
   styleUrls: ['./partner-add.component.scss']
 })
-export class PartnerAddComponent implements OnInit {
+export class PartnerAddComponent implements OnInit, AfterViewInit {
 
   breadcrumbs: BreadCrumb[] = [];
-  addPartnerForm: FormGroup<AddPartnerForm>;
+  addPartnerForm: FormGroup<AddEmployeeForm>;
   uuid: string;
   isSubmitted = false;
 
-  readonly countryList = COUNTRY_LIST;
-  readonly currencyList = CURRENCY_LIST;
-  readonly languageList = LANGUAGE_LIST;
-  readonly emailRegex = REGEX_CONSTANTS.EMAIL_REGEX;
-  readonly webUrlRegex = REGEX_CONSTANTS.WEB_URL_REGEX;
-  readonly integerRegex = REGEX_CONSTANTS.INTEGER_REGEX;
-  readonly regexType = RegexType;
   private destroyRef = inject(DestroyRef);
 
   constructor(
@@ -60,42 +46,28 @@ export class PartnerAddComponent implements OnInit {
     this.uuid = this.route.snapshot.paramMap.get('uuid');
   }
 
-  get formControls(): AddPartnerForm {
+  get formControls(): AddEmployeeForm {
     return this.addPartnerForm.controls;
   }
 
-  get addressControls(): PartnerAddress {
-    return this.addPartnerForm.controls.address.controls;
-  }
 
   ngOnInit(): void {
     this.vcEventsService.emitBreadcrumbsDetail(this.breadcrumbs);
     this.initializeForm();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     if (this.uuid) {
-      const partnerDetail = this.route.snapshot.data.partnerDetail;
+      const partnerDetail = this.route.snapshot.data.partnerDetail.data;
       this.addPartnerForm.patchValue(partnerDetail);
     }
   }
 
   initializeForm(): void {
-    this.addPartnerForm = new FormGroup<AddPartnerForm>({
-      isActive: new FormControl(false, Validators.required),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      address: new FormGroup<PartnerAddress>({
-        street: new FormControl('', Validators.required),
-        zip: new FormControl('', [Validators.required, Validators.pattern(REGEX_CONSTANTS.ZIP_REGEX)]),
-        city: new FormControl('', Validators.required),
-        country: new FormControl('', Validators.required),
-      }),
-      companyName: new FormControl('', Validators.required),
+    this.addPartnerForm = new FormGroup<AddEmployeeForm>({
       name: new FormControl('', Validators.required),
-      phoneNo: new FormControl('', Validators.required),
-      webAddress: new FormControl(''),
-      currency: new FormControl('', Validators.required),
-      locale: new FormControl('', Validators.required),
+      designation: new FormControl('', Validators.required),
+      yearsOfExperience: new FormControl('', Validators.required)
     });
   }
 
@@ -115,10 +87,8 @@ export class PartnerAddComponent implements OnInit {
   addPartner(): void {
     this.partnerService.addPartner(this.addPartnerForm.value)
       .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.isSubmitted = false))
-      .subscribe(() => {
-        this.toasterService.displaySnackBarWithTranslation(
-          'toasterMessage.addPartnerSuccessful', MessageType.success
-        );
+      .subscribe((res) => {
+        this.toasterService.displaySnackBarWithTranslation(res.message, MessageType.success);
         this.navigateToList();
       });
   }
@@ -126,10 +96,8 @@ export class PartnerAddComponent implements OnInit {
   updatePartner(): void {
     this.partnerService.updatePartnerDetail(this.addPartnerForm.value, this.uuid)
       .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.isSubmitted = false))
-      .subscribe(() => {
-        this.toasterService.displaySnackBarWithTranslation(
-          'toasterMessage.deletePartnerSuccessful', MessageType.success
-        );
+      .subscribe((res) => {
+        this.toasterService.displaySnackBarWithTranslation(res.message, MessageType.success);
         this.navigateToList();
       });
   }

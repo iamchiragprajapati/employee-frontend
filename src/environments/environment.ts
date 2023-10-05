@@ -5,6 +5,7 @@ export const environment = {
   encryptedKey: process.env.ENCRYPTED_KEY as string,
   version: npm.version,
   baseUrl: 'http://localhost:4200',
-  hostName: 'https://vc-nest-js-boilerplate.vercel.app',
+  // hostName: 'https://vc-nest-js-boilerplate.vercel.app',
+  hostName: 'http://localhost:3000',
   preferredCountries: ['ch', 'de', 'fr', 'gb', 'it', 'nl', 'fi'],
 };

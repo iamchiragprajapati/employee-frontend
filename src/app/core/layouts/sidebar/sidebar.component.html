@@ -17,7 +17,7 @@
         <li class="py-4 2md:py-5">
           <a class="menu-item" [routerLink]="[routePath.partner]" routerLinkActive="active">
             <app-vc-svg-icon [svgImageData]="listSvg" />
-            <span class="ml-6"> {{ 'common.partner' | translate }} </span>
+            <span class="ml-6"> {{ 'common.employee' | translate }} </span>
           </a>
         </li>
       </ul>
@@ -35,7 +35,7 @@
         </ng-option>
       </div>
     </ng-select>
-    <p class="text-base xl:text-lg text-secondary font-semibold mt-4">{{ userData?.name }}</p>
+    <p class="text-base xl:text-lg text-secondary font-semibold mt-4 break-words">{{ userData.name }}</p>
     <div class="mt-6">
       <a class="flex menu-item" [routerLink]="['/auth/logout']">
         <app-vc-svg-icon [svgImageData]="logoutSvg" />

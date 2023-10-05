@@ -1,6 +1,10 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { ActionToolbar } from "@models/common.model";
 
+export interface CreateEmployee {
+  name: string;
+  designation: string;
+}
 export interface CreatePartner {
   isActive: boolean;
   email: string;
@@ -31,6 +35,13 @@ export interface AddPartnerForm {
   webAddress: FormControl<string>;
   currency: FormControl<string>;
   locale: FormControl<string>;
+}
+export interface AddEmployeeForm {
+
+  name: FormControl<string>;
+  designation: FormControl<string>;
+  yearsOfExperience: FormControl<string>;
+
 }
 
 export interface PartnerAddress {

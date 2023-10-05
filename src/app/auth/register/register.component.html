@@ -1,1 +1,64 @@
-<p>register works!</p>
+<div class="flex flex-col py-6 px-4 min-h-[100vh] items-center justify-center">
+  <img class="w-[220px] md:w-[280px]" src="/assets/images/viitor-logo.png" alt="MAP logo">
+  <div
+    class="bg-white px-4 sm:px-10 md:px-[100px] w-[670px] max-w-[100%] py-4 sm:py-[44px] rounded-[10px] mt-7 md:mt-[90px]">
+    <form #loginForm="ngForm">
+      <div class="flex">
+        <label class="field-lbl" for="email"
+          [ngClass]="{ 'field-error': (loginForm.submitted || email.touched) && email.invalid }">{{ 'login.email' |
+          translate }}</label>
+        <app-vc-input
+          [customClass]="{ 'form-field': true, 'field-error': (loginForm.submitted || email.touched) && email.invalid }"
+          type="email" name="email" [required]="true" ngModel #email="ngModel" />
+      </div>
+      <ng-container *ngIf="(loginForm.submitted || email.touched) && email.errors?.required">
+        <p class="error-message"> {{ 'validation.emailRequired' | translate }} </p>
+      </ng-container>
+      <div class="flex mt-4">
+        <label class="field-lbl" for="name"
+          [ngClass]="{ 'field-error': (loginForm.submitted || name.touched) && name.invalid }">{{
+          'login.name' | translate }}</label>
+        <app-vc-input
+          [customClass]="{ 'form-field': true, 'field-error': (loginForm.submitted || name.touched) && name.invalid}"
+          type="text" name="name" [required]="true" ngModel #name="ngModel" />
+      </div>
+      <ng-container *ngIf="(loginForm.submitted || name.touched) && name.errors?.required">
+        <p class="error-message"> {{ 'validation.passwordRequired' | translate }} </p>
+      </ng-container>
+      <div class="flex mt-4">
+        <label class="field-lbl" for="password"
+          [ngClass]="{ 'field-error': (loginForm.submitted || password.touched) && password.invalid }">{{
+          'login.password' | translate }}</label>
+        <app-vc-input
+          [customClass]="{ 'form-field': true, 'field-error': (loginForm.submitted || password.touched) && password.invalid}"
+          type="password" name="password" [required]="true" ngModel #password="ngModel" />
+      </div>
+      <ng-container *ngIf="(loginForm.submitted || password.touched) && password.errors?.required">
+        <p class="error-message"> {{ 'validation.passwordRequired' | translate }} </p>
+      </ng-container>
+      <div class="flex mt-4">
+        <label class="field-lbl" for="confirmPassword"
+          [ngClass]="{ 'field-error': (loginForm.submitted || confirmPassword.touched) && confirmPassword.invalid }">{{
+          'login.confirmPassword' | translate }}</label>
+        <app-vc-input
+          [customClass]="{ 'form-field h-[50px]': true, 'field-error': (loginForm.submitted || confirmPassword.touched) && confirmPassword.invalid}"
+          type="password" name="confirmPassword" [required]="true" ngModel #confirmPassword="ngModel" />
+      </div>
+      <ng-container *ngIf="(loginForm.submitted || confirmPassword.touched) && confirmPassword.errors?.required">
+        <p class="error-message"> {{ 'validation.confirmPasswordRequired' | translate }} </p>
+      </ng-container>
+      <div class="mt-5 md:mt-8 text-right">
+        <app-vc-button [type]="'submit'"
+          [class]="{'common-btn secondary-btn font-base font-semibold rounded-[5px] min-w-[120px]': true, 'pointer-events-none': isSubmitted}"
+          [isDisabled]="isSubmitted" [spin]="isSubmitted" (buttonTap)="onSubmit(loginForm)"> {{ 'pageTitle.register' |
+          translate }}</app-vc-button>
+      </div>
+      <div class="mt-2 md:mt-3 text-right">
+        <app-vc-button [class]="{'cursor-pointer text-[13px]': true}" [isDisabled]="isSubmitted"
+          (buttonTap)="navigateToLogin()">
+          {{'login.login' | translate }}
+        </app-vc-button>
+      </div>
+    </form>
+  </div>
+</div>

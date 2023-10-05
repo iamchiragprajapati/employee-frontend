@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { API_ROUTES } from '@constants/api.constants';
-import { LoginParams, LoginResponse } from '@models/auth.model';
+import { LoginParams, LoginResponse, RegisterParams } from '@models/auth.model';
 import { HttpClientService } from '@services/http-client.service';
 import { Observable } from 'rxjs/internal/Observable';
 
@@ -13,8 +13,12 @@ export class AuthenticationService {
     private httpClientService: HttpClientService
   ) { }
 
-  login(params: LoginParams): Observable<LoginResponse> {
+  login(params: LoginParams) {
     return this.httpClientService.post(API_ROUTES.loginApi, params);
+  }
+
+  register(params: RegisterParams): Observable<LoginResponse> {
+    return this.httpClientService.post(API_ROUTES.registerApi, params);
   }
 
   forgotPassword(params: Partial<LoginParams>): Observable<[] | null> {

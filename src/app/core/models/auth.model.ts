@@ -4,6 +4,12 @@ export interface LoginParams {
   email: string;
   password: string;
 }
+export interface RegisterParams {
+  email: string;
+  name: string;
+  password: string;
+  confirmPassword: string;
+}
 
 export interface LoginResponse {
   token: string;

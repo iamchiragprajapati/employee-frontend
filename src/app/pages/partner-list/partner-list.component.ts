@@ -8,9 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DialogService } from '@app/core/services/dialog.service';
 import {
-  COUNTRY_LIST,
   DEBOUNCE_TIME,
   DEFAULT_MAT_DIALOG_CONFIG,
   DEFAULT_PAGE_INDEX,
@@ -21,10 +19,11 @@ import {
   SORT_OPTIONS
 } from '@constants/app.constants';
 import { BreadCrumb } from '@models/breadcrumb.model';
-import { PartnerDetail, PartnerList } from '@models/partner.model';
+import { PartnerDetail } from '@models/partner.model';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AlertToastrService } from '@services/alert-toastr.service';
+import { DialogService } from '@services/dialog.service';
 import { PartnerService } from '@services/partner.service';
 import { VcEventsService } from '@services/vc-events.service';
 import { VcActionToolbarComponent } from '@vc-libs/vc-action-toolbar/vc-action-toolbar.component';
@@ -46,9 +45,7 @@ export class PartnerListComponent implements OnInit {
 
   breadcrumbs: BreadCrumb[] = [];
   partnerList = new MatTableDataSource<PartnerDetail>();
-  columnLabel = [
-    'partnerId', 'companyName', 'street', 'zip', 'city', 'country', 'email', 'phoneNo', 'isActive', 'action'
-  ];
+  columnLabel = ['name', 'designation', 'yearOfExperience', 'action'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchControl = new FormControl('');
   sortValue = new FormControl('newest');
@@ -103,14 +100,9 @@ export class PartnerListComponent implements OnInit {
     this.partnerList = new MatTableDataSource([]);
     this.partnerService.getPartnerList(params)
       .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.isLoading = false))
-      .subscribe((res: PartnerList) => {
+      .subscribe((res) => {
         if (res) {
-          res.records.forEach((el: PartnerDetail | any) => {
-            COUNTRY_LIST.forEach((country) => {
-              if (el.address.country === country.value) {
-                el.address.country = `${country.label.charAt(0).toUpperCase()}${country.label.slice(1)}`;
-              }
-            });
+          res.data.forEach((el: PartnerDetail | any) => {
             el.partnerAction = [
               {
                 label: 'partner.edit',
@@ -119,15 +111,11 @@ export class PartnerListComponent implements OnInit {
               {
                 label: 'partner.delete',
                 callback: this.deletePartner.bind(this)
-              },
-              {
-                label: el.isActive ? 'partner.markAsInactive' : 'partner.markAsActive',
-                callback: this.updateStatus.bind(this)
               }
             ];
           });
-          this.partnerList = new MatTableDataSource(res.records);
-          this.paginator.length = res.totalCount;
+          this.partnerList = new MatTableDataSource(res.data);
+          this.paginator.length = res.data.length;
         }
       });
   }
@@ -145,10 +133,8 @@ export class PartnerListComponent implements OnInit {
       if (res) {
         this.partnerService.deletePartnerDetail(row._id)
           .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe(() => {
-            this.toasterService.displaySnackBarWithTranslation(
-              'toasterMessage.updateStatusSuccessful', MessageType.success
-            );
+          .subscribe((res: any) => {
+            this.toasterService.displaySnackBarWithTranslation(res.message, MessageType.success);
             const index = this.partnerList.data.findIndex((user) => user._id === row._id);
             this.partnerList.data.splice(index, 1);
             this.partnerList = new MatTableDataSource(this.partnerList.data);
@@ -165,10 +151,8 @@ export class PartnerListComponent implements OnInit {
   updateStatus(row: PartnerDetail): void {
     this.partnerService.updatePartnerDetail({ isActive: !row.isActive }, row._id)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.toasterService.displaySnackBarWithTranslation(
-          'toasterMessage.updateStatusSuccessful', MessageType.success
-        );
+      .subscribe((res) => {
+        this.toasterService.displaySnackBarWithTranslation(res.message, MessageType.success);
         this.getPartnerList();
       });
   }

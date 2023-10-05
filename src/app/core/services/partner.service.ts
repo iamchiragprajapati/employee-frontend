@@ -3,9 +3,9 @@ import { API_ROUTES } from '@constants/api.constants';
 import { BreadCrumb } from '@models/breadcrumb.model';
 import {
   CardCodeList,
+  CreateEmployee,
   CreatePartner,
   GenerateCards,
-  PartnerList,
   PartnerListQueryParams
 } from '@models/partner.model';
 import { HttpClientService } from '@services/http-client.service';
@@ -24,23 +24,21 @@ export class PartnerService {
     private storageService: StorageService
   ) { }
 
-  getPartnerList(params: Partial<PartnerListQueryParams>): Observable<PartnerList> {
-    params = { ...params, userId: this.storageService.getUserId() };
-    return this.httpClientService.get(API_ROUTES.partnerListApi, { params });
+  getPartnerList(params: Partial<PartnerListQueryParams>): Observable<any> {
+    return this.httpClientService.get(API_ROUTES.partnerListApi);
   }
 
-  addPartner(params: Partial<CreatePartner>): Observable<[] | null> {
-    return this.httpClientService.post(API_ROUTES.addPartnerApi,
-      { ...params, userId: this.storageService.getUserId() });
+  addPartner(param: Partial<CreateEmployee>): Observable<any> {
+    return this.httpClientService.post(API_ROUTES.addPartnerApi, param);
   }
 
   getPartnerDetail(uuid: string): Observable<CreatePartner> {
     return this.httpClientService.get(`${API_ROUTES.addPartnerApi}/${uuid}`) as Observable<CreatePartner>;
   }
 
-  updatePartnerDetail(params: Partial<CreatePartner>, uuid: string): Observable<[] | null> {
+  updatePartnerDetail(params: Partial<CreatePartner>, uuid: string): Observable<any> {
     return this.httpClientService.put(`${API_ROUTES.addPartnerApi}/${uuid}`,
-      { ...params, userId: this.storageService.getUserId() });
+      { ...params });
   }
 
   deletePartnerDetail(uuid: string): Observable<[] | null> {

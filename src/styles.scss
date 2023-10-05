@@ -398,12 +398,12 @@ input:-webkit-autofill:active {
 }
 
 .field-lbl {
-  @apply flex items-center text-grey-light rounded-md rounded-r-none min-w-[105px] md:min-w-[115px] w-[105px] md:w-[115px] px-4 py-1 leading-[20px] border border-r-0 border-grey-50 font-semibold;
+  @apply flex items-center text-grey-light rounded-md rounded-r-none min-w-[125px] md:min-w-[130px] w-[125px] md:w-[130px] px-4 py-1 leading-[20px] border border-r-0 border-grey-50 font-semibold;
   word-break: break-word;
 }
 
 .form-field {
-  @apply w-full px-4 font-semibold text-secondary rounded-md rounded-l-none border outline-0 min-h-[40px] border-grey-50;
+  @apply w-full px-4 font-semibold text-secondary rounded-md rounded-l-none border outline-0 min-h-[50px] border-grey-50;
 
   &:disabled {
     @apply bg-white;

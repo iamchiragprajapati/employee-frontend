@@ -26,7 +26,7 @@ export const adminRoutes: Routes = [
       {
         path: 'partner',
         data: {
-          breadcrumb: 'partnerList',
+          breadcrumb: 'employeeList',
         },
         children: [
           {
@@ -36,7 +36,7 @@ export const adminRoutes: Routes = [
           },
           {
             path: 'list',
-            title: 'pageTitle.partnerList',
+            title: 'pageTitle.employeeList',
             loadComponent: () =>
               import('@pages/partner-list/partner-list.component').then((m) => m.PartnerListComponent),
             resolve: {
@@ -51,7 +51,7 @@ export const adminRoutes: Routes = [
           },
           {
             path: 'add',
-            title: 'pageTitle.addPartner',
+            title: 'pageTitle.addEmployee',
             loadComponent: () => import('@pages/partner-add/partner-add.component').then((m) => m.PartnerAddComponent),
             data: {
               breadcrumb: 'add'
