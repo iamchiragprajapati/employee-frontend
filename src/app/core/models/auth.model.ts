@@ -24,6 +24,14 @@ export interface LoginResponse {
   currency: string;
 }
 
+export interface UserDataModel {
+  _id: string;
+  email: string;
+  name: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export interface ForgetPasswordForm {
   email: FormControl<string>;
 }

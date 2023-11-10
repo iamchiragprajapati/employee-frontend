@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router";
 import { BreadcrumbResolverFn } from "@services/breadcrumb-resolve.service";
-import { PartnerDetailService } from "@services/partner-detail.service";
+import { PartnerDetailService, ProfileDetailService } from "@services/partner-detail.service";
 
 export const adminRoutes: Routes = [
   {
@@ -24,7 +24,20 @@ export const adminRoutes: Routes = [
         }
       },
       {
-        path: 'partner',
+        path: 'profile/:uuid',
+        title: 'pageTitle.dashboard',
+        loadComponent: () => import('@pages/profile/profile.component').then((m) => m.ProfileComponent),
+        data: {
+          role: 'admin',
+          breadcrumb: 'profile',
+        },
+        resolve: {
+          breadcrumbs: BreadcrumbResolverFn,
+          profileDetails: ProfileDetailService
+        }
+      },
+      {
+        path: 'employee',
         data: {
           breadcrumb: 'employeeList',
         },

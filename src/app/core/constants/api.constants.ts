@@ -7,6 +7,8 @@ export const API_ROUTES = {
   setPasswordApi: `${environment.hostName}/api/auth/resetPassword`,
   partnerListApi: `${environment.hostName}/api/employee`,
   addPartnerApi: `${environment.hostName}/api/employee`,
+  uploadProfilePicApi: `${environment.hostName}/api/employee/profile`,
+  getProfilePicApi: `${environment.hostName}/api/employee/profile`,
   cardListApi: `${environment.hostName}/api/cards`,
   downloadExcelApi: `${environment.hostName}/api/cards/excel`,
   accountingStatsApi: `${environment.hostName}/api/cards/accountingStats`,

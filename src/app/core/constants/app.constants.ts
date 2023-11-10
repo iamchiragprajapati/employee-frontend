@@ -56,7 +56,8 @@ export const LANGUAGE_LIST = [
 
 export const ROUTE_PATH = {
   dashboard: '/admin/dashboard',
-  partner: '/admin/partner'
+  employee: '/admin/employee',
+  profile: '/admin/profile'
 };
 
 export const LANGUAGE_CONSTANTS_LIST = [
@@ -80,8 +81,8 @@ export enum HttpMethod {
 }
 
 export const SORT_OPTIONS = [
-  { value: 'oldest', label: 'oldestEntries' },
-  { value: 'newest', label: 'latestEntries' }
+  { value: 'asc', label: 'ascending' },
+  { value: 'desc', label: 'descending' }
 ];
 
 export enum RegexType {
@@ -97,14 +98,20 @@ export enum AccountingStatus {
   open = 'open'
 }
 
-export const SVG_ICON_LIST = [{
-  name: 'list',
-  path: 'assets/images/list.svg'
-},
-{
-  name: 'logout',
-  path: 'assets/images/logout.svg'
-}];
+export const SVG_ICON_LIST = [
+  {
+    name: 'list',
+    path: 'assets/images/list.svg'
+  },
+  {
+    name: 'logout',
+    path: 'assets/images/logout.svg'
+  },
+  {
+    name: 'profile',
+    path: 'assets/images/profile.svg'
+  }
+];
 
 export enum PositionEnum {
   left = 'left',
@@ -119,3 +126,4 @@ export const DEFAULT_PAGE_SIZE = 10;
 export const DEFAULT_PAGE_INDEX = 1;
 export const DEBOUNCE_TIME = 500;
 export const LOGOUT = 'logout';
+export const allowedImageFileType = ['image/png', 'image/jpeg', 'image/jpg'];

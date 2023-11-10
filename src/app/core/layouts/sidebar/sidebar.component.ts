@@ -32,6 +32,7 @@ export class SidebarComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
   listSvg: SvgIcon;
   logoutSvg: SvgIcon;
+  profileSvg: SvgIcon;
   readonly routePath = ROUTE_PATH;
   readonly languageList = LANGUAGE_CONSTANTS_LIST;
 
@@ -42,6 +43,7 @@ export class SidebarComponent implements OnInit {
   ) {
     this.listSvg = this.assetSvgIcon.find((x) => x.name === 'list');
     this.logoutSvg = this.assetSvgIcon.find((x) => x.name === 'logout');
+    this.profileSvg = this.assetSvgIcon.find((x) => x.name === 'profile');
     this.userData = this.storageService.get(STORAGE.USER_DATA);
     this.currentLanguage = this.storageService.get(STORAGE.CURRENT_LANGUAGE_STATE_KEY);
   }

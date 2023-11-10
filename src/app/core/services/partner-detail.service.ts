@@ -22,3 +22,20 @@ export const PartnerDetailService: ResolveFn<Observable<CreatePartner | unknown>
         return null;
       }));
   };
+
+
+export const ProfileDetailService: ResolveFn<Observable<CreatePartner | unknown>> =
+  (route: ActivatedRouteSnapshot) => {
+    const partnerService = inject(PartnerService);
+    const toasterService = inject(AlertToastrService);
+    const router = inject(Router);
+
+    return partnerService.getProfile(route.params.uuid)
+      .pipe(catchError((error: HttpErrorResponse) => {
+        if (error.status === HttpStatusCode.BadRequest) {
+          toasterService.displaySnackBarWithTranslation(error.message, MessageType.error);
+        }
+        router.navigate(['/admin/partner']);
+        return null;
+      }));
+  };

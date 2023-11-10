@@ -25,7 +25,7 @@ export class PartnerService {
   ) { }
 
   getPartnerList(params: Partial<PartnerListQueryParams>): Observable<any> {
-    return this.httpClientService.get(API_ROUTES.partnerListApi);
+    return this.httpClientService.get(API_ROUTES.partnerListApi, { params });
   }
 
   addPartner(param: Partial<CreateEmployee>): Observable<any> {
@@ -55,6 +55,14 @@ export class PartnerService {
 
   updateAccountStatus(uuid: string, params: { status: string }): Observable<[] | null> {
     return this.httpClientService.put(`${API_ROUTES.accountStatusChangeApi}/${uuid}`, params);
+  }
+
+  uploadProfilePic(param: any): Observable<any> {
+    return this.httpClientService.post(API_ROUTES.uploadProfilePicApi, param);
+  }
+
+  getProfile(uuid: string): Observable<any> {
+    return this.httpClientService.get(`${API_ROUTES.getProfilePicApi}/${uuid}`);
   }
 
 }

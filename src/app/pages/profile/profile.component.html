@@ -1,0 +1,52 @@
+<div class="bg-white shadow-2sm p-4 lg:p-6 xl:p-8 2xl:p-10 rounded-[10px] w-[100%] max-w-[900px]">
+  <form [formGroup]="addPartnerForm">
+    <div class="flex flex-wrap -m-2">
+      <div class="p-2">
+      </div>
+      <ng-container *ngIf="imgUrl">
+        <div>
+          <img [src]="imgUrl" class="profile-section" alt="profile image">
+        </div>
+      </ng-container>
+      <div class="w-[100%] p-2">
+        <div class="flex">
+          <label class="field-lbl" for="img"
+            [ngClass]="{ 'field-error': formControls.img.touched && formControls.img.invalid }">{{
+            'partner.add.img' | translate }}</label>
+          <input type="file" name="img" id="img" (change)="onFileChange($event, formControls.img)">
+        </div>
+        <ng-container *ngTemplateOutlet="requiredError; context: { control: formControls.img }"></ng-container>
+      </div>
+      <div class="w-full p-2">
+        <div class="flex">
+          <label class="field-lbl" for="name"
+            [ngClass]="{ 'field-error': formControls.name.touched && formControls.name.invalid }">{{
+            'partner.add.name' | translate }}</label>
+          <app-vc-input formControlName="name"
+            [customClass]="{ 'form-field': true, 'field-error': formControls.name.touched && formControls.name.invalid }"
+            type="text" name="user_name" />
+        </div>
+        <ng-container *ngTemplateOutlet="requiredError; context: { control: formControls.name }"></ng-container>
+      </div>
+      <div class="flex justify-end mt-6 2xl:mt-8">
+        <app-vc-button [class]="{ 'common-btn secondary-btn font-semibold rounded-[5px] min-w-[100px] mr-4': true }"
+          (buttonTap)="navigateToList()">{{'partner.add.cancel' | translate}}</app-vc-button>
+        <app-vc-button [class]="{ 'common-btn primary-btn font-semibold rounded-[5px] min-w-[100px]': true }"
+          (buttonTap)="onSubmit()" [isDisabled]="isSubmitted" [spin]="isSubmitted">
+          {{ 'partner.add.update' | translate }}</app-vc-button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-template #requiredError let-control="control">
+  <ng-container *ngIf="control.touched && control.errors?.required">
+    <p class="error-message">{{ 'validation.fieldRequired' | translate }}</p>
+  </ng-container>
+</ng-template>
+<ng-template #patternError let-control="control" let-message="message">
+  <ng-container
+    *ngIf="control.touched && (control.errors?.pattern || control.errors?.email || control.errors?.invalidNumber)">
+    <p class="error-message">{{ message }}</p>
+  </ng-container>
+</ng-template>
