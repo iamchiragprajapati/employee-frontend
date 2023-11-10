@@ -12,7 +12,6 @@ import {
   DEBOUNCE_TIME,
   DEFAULT_MAT_DIALOG_CONFIG,
   DEFAULT_PAGE_INDEX,
-  DEFAULT_PAGE_SIZE,
   MessageType,
   PAGE_SIZE,
   PositionEnum,
@@ -48,7 +47,7 @@ export class PartnerListComponent implements OnInit {
   columnLabel = ['name', 'designation', 'yearOfExperience', 'action'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   searchControl = new FormControl('');
-  sortValue = new FormControl('newest');
+  sortValue = new FormControl('asc');
   searchValue: string;
   isLoading = false;
 
@@ -92,8 +91,9 @@ export class PartnerListComponent implements OnInit {
   getPartnerList(): void {
     const params = {
       sort: this.sortValue.value,
-      pageSize: this.paginator?.pageSize || DEFAULT_PAGE_SIZE,
-      page: (this.paginator?.pageIndex + 1) || DEFAULT_PAGE_INDEX,
+      sortBy: 'name',
+      limit: 10,
+      skip: (this.paginator?.pageIndex + 1) || DEFAULT_PAGE_INDEX,
       ...this.searchValue && { search: this.searchValue }
     };
     this.isLoading = true;
@@ -115,7 +115,7 @@ export class PartnerListComponent implements OnInit {
             ];
           });
           this.partnerList = new MatTableDataSource(res.data);
-          this.paginator.length = res.data.length;
+          this.paginator.length = res.totalCount;
         }
       });
   }
@@ -159,11 +159,7 @@ export class PartnerListComponent implements OnInit {
 
   onSearch(searchValue: string): void {
     this.paginator.firstPage();
-    if (
-      searchValue &&
-      searchValue.trim() !== '' &&
-      searchValue.trim().length >= 4
-    ) {
+    if (searchValue && searchValue.trim() !== '') {
       this.searchValue = searchValue;
     } else {
       this.searchValue = '';
