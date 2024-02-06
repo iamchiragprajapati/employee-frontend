@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { UtilityService } from '@services/utility.service';
+import { RouterModule } from '@angular/router';
+import { UtilityService } from './core/services/utility.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterModule],
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
+  title = 'employee-frontend';
 
   constructor(
     private utilityService: UtilityService
